@@ -1,0 +1,32 @@
+[
+    {
+      "id": 1,
+      "username": "user1",
+      "name": "John",
+      "email": "wichuda.ph.62@ubu.ac.th",
+      "lineNotify": true,
+      "emailNotify": true,
+      "iot": true,
+      "all": true
+    },
+    {
+      "id": 2,
+      "username": "user2",
+      "name": "Jackson",
+      "email": "wichudda@gmail.com",
+      "lineNotify": true,
+      "emailNotify": false,
+      "iot": false,
+      "all": false
+    },
+    {
+      "id": 3,
+      "username": "user3",
+      "name": "Mary",
+      "email": "alpha15479@gmail.com",
+      "lineNotify": false,
+      "emailNotify": true,
+      "iot": false,
+      "all": false
+    }
+]
