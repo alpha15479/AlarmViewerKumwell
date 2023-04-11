@@ -6,8 +6,18 @@ const upload = multer();
 
 router.get('/', async (req, res, next) => {
   try {
-    const AlarmSounds = await AlarmSoundService.getAllAlarmSounds();
-    res.status(200).json(AlarmSounds);
+    const alarmSounds = await AlarmSoundService.getAllAlarmSounds();
+    const result = alarmSounds.map((sound) => {
+      return {
+        id: sound.id,
+        name: sound.name,
+        type: sound.type,
+        sound_name: sound.sound_name,
+        created_at: sound.created_at,
+        updated_at: sound.updated_at,
+      };
+    });
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
