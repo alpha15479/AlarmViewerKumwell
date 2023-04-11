@@ -13,12 +13,29 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+// router.get('/:id', async (req, res, next) => {
+//   try {
+//     const AlarmSounds = await AlarmSoundService.getAlarmSoundById(req.params.id);
+//     res.status(200).json(AlarmSounds);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+router.get('/:id', async (req, res) => {
+  const id = req.params.id;
   try {
-    const AlarmSounds = await AlarmSoundService.getAlarmSoundById(req.params.id);
-    res.status(200).json(AlarmSounds);
-  } catch (error) {
-    next(error);
+    const { file, name } = await AlarmSoundService.getAlarmSoundById(id);
+
+    res.writeHead(200, {
+      'Content-Type': 'audio/mpeg',
+      'Content-Length': file.length
+    });
+
+    res.write(file);
+    res.end();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: err });
   }
 });
 
