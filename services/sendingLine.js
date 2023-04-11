@@ -1,6 +1,4 @@
 const request = require('request');
-const dotenv = require('dotenv');
-dotenv.config();
 
 const url_line_notification = "https://notify-api.line.me/api/notify";
 
