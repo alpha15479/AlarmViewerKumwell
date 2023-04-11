@@ -14,6 +14,9 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const settingNotification = await SettingNotificationService.getSettingNotificationById(req.params.id);
+    if (!settingNotification) {
+      return res.status(204).json({ message: 'Setting notification data not found' });
+    }
     res.status(200).json(settingNotification);
   } catch (error) {
     next(error);

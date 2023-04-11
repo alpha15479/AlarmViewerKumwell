@@ -13,19 +13,16 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// router.get('/:id', async (req, res, next) => {
-//   try {
-//     const AlarmSounds = await AlarmSoundService.getAlarmSoundById(req.params.id);
-//     res.status(200).json(AlarmSounds);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
   try {
-    const { file, name } = await AlarmSoundService.getAlarmSoundById(id);
+    const result = await AlarmSoundService.getAlarmSoundById(id);
+    if (!result || !result.file) {
+      console.log(`No audio file found for id: ${id}`);
+      return res.status(204).send();
+    }
 
+    const { file, name } = result;
     res.writeHead(200, {
       'Content-Type': 'audio/mpeg',
       'Content-Length': file.length

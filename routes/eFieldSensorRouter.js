@@ -14,6 +14,9 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const eFieldSensors = await EFieldSensorService.getEFieldSensorById(req.params.id);
+    if (!eFieldSensors) {
+      return res.status(204).json({ message: 'E-Field Sensor not found' });
+    }
     res.status(200).json(eFieldSensors);
   } catch (error) {
     next(error);
