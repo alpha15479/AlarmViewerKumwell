@@ -5,6 +5,11 @@ const getAllAlarmSounds = async () => {
   return alarmSounds;
 };
 
+const getOne = async () => {
+  const alarmSounds = await AlarmSound.findOne();
+  return alarmSounds;
+};
+
 const getAlarmSoundById = async (id) => {
   const alarmSound = await AlarmSound.findByPk(id);
   return alarmSound;
@@ -27,6 +32,7 @@ const deleteAlarmSoundById = async (id) => {
 };
 
 module.exports = {
+  getOne,
   getAllAlarmSounds,
   getAlarmSoundById,
   createAlarmSound,

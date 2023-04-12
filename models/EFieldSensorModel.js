@@ -10,7 +10,8 @@ const EFieldSensor = sequelize.define('EFieldSensor', {
   },
   warning_point_id: {
     type: DataTypes.STRING(100),
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   e_field_name: {
     type: DataTypes.STRING(100),

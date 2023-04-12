@@ -5,6 +5,11 @@ const getAllSettingNotifications = async () => {
   return settingNotifications;
 };
 
+const getOne = async () => {
+  const settingNotifications = await SettingNotification.findOne();
+  return settingNotifications;
+};
+
 const getSettingNotificationById = async (id) => {
   const settingNotification = await SettingNotification.findByPk(id);
   return settingNotification;
@@ -27,6 +32,7 @@ const deleteSettingNotificationById = async (id) => {
 };
 
 module.exports = {
+  getOne,
   getAllSettingNotifications,
   getSettingNotificationById,
   createSettingNotification,

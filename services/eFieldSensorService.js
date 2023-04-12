@@ -5,6 +5,11 @@ const getAllEFieldSensors = async () => {
   return eFieldSensors;
 };
 
+const getOne = async () => {
+  const eFieldSensors = await EFieldSensor.findOne();
+  return eFieldSensors;
+};
+
 const getEFieldSensorById = async (id) => {
   const eFieldSensor = await EFieldSensor.findByPk(id);
   return eFieldSensor;
@@ -27,6 +32,7 @@ const deleteEFieldSensorById = async (id) => {
 };
 
 module.exports = {
+  getOne,
   getAllEFieldSensors,
   getEFieldSensorById,
   createEFieldSensor,

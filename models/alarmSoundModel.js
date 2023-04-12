@@ -22,7 +22,8 @@ const AlarmSound = sequelize.define('AlarmSound', {
     },
     sound_name: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     created_at: {
         type: DataTypes.DATE,

@@ -10,7 +10,8 @@ const SettingNotification = sequelize.define('SettingNotification', {
   },
   custom_key: {
     type: DataTypes.STRING(100),
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   text: {
     type: DataTypes.STRING(100),

@@ -5,10 +5,27 @@ const validate = (method) => {
   switch (method) {
     case 'createEFieldSensor': {
       return [
-        check('warning_point_id', 'warning_point_id is required').not().isEmpty(),
+        check('warning_point_id', 'warning_point_id is required').not().isEmpty()
+          .custom(async (value) => {
+            const warning = await EFieldSensorService.getOne({ where: { warning_point_id: value }});
+            if (warning) {
+              throw new Error('warning point id already exists');
+            }
+          }),
         check('e_field_name', 'e_field_name is required').not().isEmpty(),
         check('lat', 'lat is required').not().isEmpty(),
         check('lon', 'lon is required').not().isEmpty(),
+      ];
+    }
+    case 'updateEFieldSensorById': {
+      return [
+        check('warning_point_id').not().isEmpty()
+        .custom(async (value) => {
+          const warning = await EFieldSensorService.getOne({ where: { warning_point_id: value }});
+          if (warning) {
+            throw new Error('warning point id already exists');
+          }
+        }),
       ];
     }
     default:
