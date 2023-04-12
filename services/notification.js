@@ -37,57 +37,62 @@ getDataFromDatabase((err, results) => {
   }
 });
 
-// const sendEmail = async (email) => {
-//   try {
-//     let transporter = nodemailer.createTransport({
-//       service: 'gmail',
-//       auth: {
-//         user: 'wichuda.ph.62@ubu.ac.th',
-//         pass: 'hwvY2265'
-//       }
-//     });
-
-//     let info = await transporter.sendMail({
-//       from: 'wichuda.ph.62@ubu.ac.th',
-//       to: email,
-//       subject: 'Test Email',
-//       text: 'This is a test email from Node.js'
-//     });
-
-//     console.log('Email sent: ' + info.response);
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ message: 'Something went wrong', error: error });
-//   }
-// };
-
-const emailNotification = async () => {
+const sendEmail = async (email, text) => {
     try {
-      const response = await axios.get('http://localhost:3000/api/v1/setting-notifications/');
-      const data = response.data;
-  
-      const userResponse = await axios.get('http://localhost:3000/api/v1/notification');
-      const users = userResponse.data;
-      const allEmail = []
-          
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].email_notification === true) {
-            console.log('index : ', i)
-            const text = data[i].text
-            console.log('Text : ' + text)
-            const matchingUser = users.find(user => user.custom_key === data[i].custom_key);
-            if (matchingUser) {
-                const email = matchingUser.email
-                console.log("User Email :", email);
-                // sendEmail(email);
-                allEmail.push(email)
-            }
+      let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'phutthinan.mo.62@ubu.ac.th',
+          pass: 'rkeT6357'
         }
-      }
-      return allEmail;
+      });
+  
+      let info = await transporter.sendMail({
+        from: 'wichuda.ph.62@ubu.ac.th',
+        to: email,
+        subject: 'Notification From Kumwell Alarm Viewer',
+        text: text
+      });
+  
+      console.log('Email sent: ' + info.response);
     } catch (error) {
       console.log(error);
       throw new Error(error);
+    }
+};
+
+const emailNotification = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/api/v1/setting-notifications/');
+        const data = response.data;
+
+        const userResponse = await axios.get('http://localhost:3000/api/v1/notification');
+        const users = userResponse.data;
+        const allEmail = [];
+
+        for (let i = 0; i < data.length; i++) {
+        if (data[i].email_notification === true) {
+            console.log('index : ', i);
+            const text = data[i].text;
+            console.log('Text : ' + text);
+            const matchingUser = users.find(user => user.custom_key === data[i].custom_key);
+            if (matchingUser) {
+            const email = matchingUser.email;
+            console.log("User Email :", email);
+            try {
+                await sendEmail(email, text);
+                allEmail.push(email);
+            } catch(err) {
+                console.log("Error kaa");
+                throw new Error(err);
+            }
+            }
+        }
+        }
+        return allEmail;
+    } catch (error) {
+        console.log(error);
+        throw new Error(error);
     }
 };
 
@@ -109,7 +114,7 @@ const lineNotification = async () => {
                 console.log("User Token :", token);
                 console.log("User Text :", text);
 
-                const message = `แจ้งเตือนจ้าแจ้งเตือน ${text}`;
+                const message = `Notification From Kumwell Alarm Viewer ${text}`;
                 const notifyResponse = await axios.post(`https://notify-api.line.me/api/notify?message=${message}`, {}, {
                     headers: {
                     'Authorization': `Bearer ${token}`
