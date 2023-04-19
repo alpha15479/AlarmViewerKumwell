@@ -14,7 +14,7 @@ connection.connect((err) => {
     console.error('error connecting: ' + err.stack);
     return;
   }
-  console.log('connected as id ' + connection.threadId);
+  // console.log('connected as id ' + connection.threadId);
 });
 
 function getDataFromDatabase(callback) {
@@ -32,9 +32,10 @@ function getDataFromDatabase(callback) {
 getDataFromDatabase((err, results) => {
   if (err) {
     console.error(err);
-  } else {
-    console.log(results);
-  }
+  } 
+  // else {
+  //   console.log(results);
+  // }
 });
 
 const sendEmail = async (email, text) => {
@@ -120,6 +121,10 @@ const lineNotification = async () => {
                     'Authorization': `Bearer ${token}`
                     }
                 });
+
+                if (notifyResponse.data.status === 401) {
+                    console.log("Invalid access token for user:", matchingUser)
+                }
                 
                 allToken.push(token)
                 console.log('LINE Notify response:', notifyResponse.data);
